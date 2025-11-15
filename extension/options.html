@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROSETTA Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 32px;
+      text-align: center;
+    }
+    
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    
+    header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+    
+    main {
+      padding: 32px;
+    }
+    
+    .section {
+      margin-bottom: 32px;
+    }
+    
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    
+    input[type="text"],
+    input[type="url"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .helper-text {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    .checkbox-group label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: normal;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #666;
+      margin-left: 8px;
+    }
+    
+    .btn-secondary:hover {
+      background: #ececec;
+    }
+    
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status-connected {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-disconnected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .status-testing {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #eee;
+    }
+    
+    .save-status {
+      font-size: 14px;
+      color: #28a745;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .save-status.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚙️ ROSETTA Settings</h1>
+      <p>Configure your form filler preferences</p>
+    </header>
+    
+    <main>
+      <div class="section">
+        <h2>🔌 API Connection</h2>
+        
+        <div class="form-group">
+          <label for="apiUrl">API URL</label>
+          <input type="url" id="apiUrl" placeholder="http://localhost:8000">
+          <div class="helper-text">
+            URL of your ROSETTA API server
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Connection Status</label>
+          <div>
+            <span id="connectionStatus" class="status-indicator status-disconnected">
+              ⚫ Not Connected
+            </span>
+            <button id="testConnection" class="btn btn-secondary" style="margin-left: 12px;">
+              Test Connection
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>🌍 OCR Settings</h2>
+        
+        <div class="form-group">
+          <label for="language">Default Language</label>
+          <select id="language">
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+            <option value="ta">Tamil</option>
+            <option value="hi">Hindi</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="performanceMode">Performance Mode</label>
+          <select id="performanceMode">
+            <option value="fast">Fast (Lower accuracy)</option>
+            <option value="balanced">Balanced (Recommended)</option>
+            <option value="accurate">Accurate (Slower)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="preprocessing">
+            <label for="preprocessing">Enable image preprocessing</label>
+          </div>
+          <div class="helper-text">
+            Improves OCR quality for low-quality images
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>✨ Auto-Fill Options</h2>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="autoFill">
+            <label for="autoFill">Automatically fill form after extraction</label>
+          </div>
+          <div class="helper-text">
+            If disabled, you can review data before filling
+          </div>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <div>
+          <span id="saveStatus" class="save-status">✅ Settings saved!</span>
+        </div>
+        <div>
+          <button id="resetBtn" class="btn btn-secondary">Reset to Defaults</button>
+          <button id="saveBtn" class="btn btn-primary">Save Settings</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

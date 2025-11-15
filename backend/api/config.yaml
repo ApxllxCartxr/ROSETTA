@@ -1,0 +1,56 @@
+# ROSETTA API Configuration
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: true  # Enable auto-reload in development
+
+cors:
+  allow_origins: ["*"]  # Allow all origins for browser extensions
+  allow_methods: ["GET", "POST", "DELETE", "OPTIONS"]
+  allow_headers: ["*"]
+  allow_credentials: true
+
+upload:
+  max_file_size_mb: 10
+  max_pdf_pages: 5
+  allowed_formats: ["pdf", "jpg", "jpeg", "png", "tiff", "tif"]
+  temp_dir: "temp/uploads"
+
+cache:
+  ttl_hours: 24
+  max_documents: 1000
+  cleanup_interval_minutes: 60
+
+ocr:
+  default_language: "en"
+  supported_languages: ["en", "ar", "ta", "hi"]
+  confidence_threshold: 0.80
+  performance_mode: "balanced"  # fast | balanced | accurate
+  enable_preprocessing: true
+  preprocessing:
+    denoise: true
+    deskew: true
+    contrast: true
+    sharpen: true
+
+llm:
+  model_path: "C:\\Users\\Joseph\\Projects\\ROSETTA\\models\\qwen2.5-1.5b-instruct-q4_k_m.gguf"
+  temperature: 0.1
+  max_tokens: 512
+  timeout_seconds: 30
+  n_ctx: 2048
+  n_threads: 8
+
+jobs:
+  max_concurrent: 3
+  timeout_seconds: 120
+  result_ttl_hours: 1
+  cleanup_interval_minutes: 30
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/api.log"
+  console: true

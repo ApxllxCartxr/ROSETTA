@@ -1,0 +1,40 @@
+/* ROSETTA Form Filler - Content Script Styles */
+
+.rosetta-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 999999;
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.rosetta-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Highlight filled fields */
+input.rosetta-filled,
+select.rosetta-filled,
+textarea.rosetta-filled {
+  animation: rosetta-fill-pulse 0.5s ease;
+}
+
+@keyframes rosetta-fill-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+  }
+}
