@@ -28,7 +28,7 @@ if __name__ == "__main__":
         print("=" * 60)
         
         uvicorn.run(
-            "api.main:app",
+            "api.main:app",   # <-- main.py contains FastAPI 'app'
             host=server_config.get("host", "0.0.0.0"),
             port=server_config.get("port", 8000),
             reload=server_config.get("reload", True),
